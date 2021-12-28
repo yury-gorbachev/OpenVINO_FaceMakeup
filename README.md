@@ -1,55 +1,51 @@
-# face-makeup.PyTorch
-Lip and hair color editor using face parsing maps.
+# RetinaFace in OpenVINO
 
-<table>
+This is OpenVINO based demo for face makeup. Forked from original repository here: [https://github.com/zllrunning/face-makeup.PyTorch](https://github.com/zllrunning/face-makeup.PyTorch)
 
-<tr>
-<th>&nbsp;</th>
-<th>Hair</th>
-<th>Lip</th>
-</tr>
+Torchvision and PILdependency for demo has been eliminated and code can run without it. Some postprocessing steps are kept as is with minimal optimizations performed.
 
-<!-- Line 1: Original Input -->
-<tr>
-<td><em>Original Input</em></td>
-<td><img src="makeup/116_ori.png" height="256" width="256" alt="Original Input"></td>
-<td><img src="makeup/116_lip_ori.png" height="256" width="256" alt="Original Input"></td>
-</tr>
+## Steps to reproduce
 
-<!-- Line 2: Color -->
-<tr>
-<td >Color</td>
-<td><img src="makeup/116_0.png" height="256" width="256" alt="Color"></td>
-<td><img src="makeup/116_6.png" height="256" width="256" alt="Color"></td>
-</tr>
-
-<!-- Line 3: Color -->
-<tr>
-<td>Color</td>
-<td><img src="makeup/116_1.png" height="256" width="256" alt="Color"></td>
-<td><img src="makeup/116_3.png" height="256" width="256" alt="Color"></td>
-</tr>
-
-<!-- Line 4: Color -->
-<tr>
-<td>Color</td>
-<td><img src="makeup/116_2.png" height="256" width="256" alt="Color"></td>
-<td><img src="makeup/116_4.png" height="256" width="256" alt="Color"></td>
-</tr>
-
-</table>
-
-### Using PyTorch 1.0 and python 3.x
-
-## Demo
-Change hair and lip color:
+### Clone source and install packages
 ```Shell
-python makeup.py --img-path imgs/116.jpg
+https://github.com/yury-gorbachev/OpenVINO_FaceMakeup
+conda create --name ov_makeup python=3.7
+conda activate ov_makeup
+cd OpenVINO_FaceMakeup
+pip install -r requirements.txt
 ```
-### Try to use other colors:
-Change the color list in **makeup.py**(line 83)
+
+### Install OpenVINO and development tools
+```Shell
+pip install openvino-dev >= 22.1
 ```
-colors = [[230, 50, 20], [20, 70, 180], [20, 70, 180]]
+
+### Convert model to onnx (Will generate MobileNet baset model by default)
+
+```Shell
+python ./onnx_export.py
 ```
-### Train face parsing model (optional)
-Follow this repo [zllrunning/face-parsing.PyTorch](https://github.com/zllrunning/face-parsing.PyTorch)
+This will generate FaceParsing.onnx
+
+### Convert model to OpenVINO IR (Will generate MobileNet baset model by default)
+
+```Shell
+mo --use_new_frontend --mean_values="[123.675, 116.28, 103.53]" --scale_values="[58.395, 57.120000000000005, 57.375]" --input_model=FaceParsing.onnx
+```
+This will generate FaceParsing.xml and *.bin files that represent model in OV IR.
+Mean values are integrated in model graph, no need for additional preprocessing.
+
+### Run demo (requries camera)
+```Shell
+python openvino_webcam_demo.py
+```
+Demo will run on CPU by default with first available video capture device.
+
+## Using different inference device
+
+Use --device option to change device that will be used for inference (e.g. GPU). List of available devices is printed upon demo run.
+Check out [openvino.ai](openvino.ai) for information on configuration
+
+```Shell
+python openvino_webcam_demo.py --device=GPU
+```
