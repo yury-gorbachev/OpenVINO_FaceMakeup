@@ -2,7 +2,7 @@
 
 This is OpenVINO based demo for face makeup. Forked from original repository here: [https://github.com/zllrunning/face-makeup.PyTorch](https://github.com/zllrunning/face-makeup.PyTorch)
 
-Torchvision and PILdependency for demo has been eliminated and code can run without it. Some postprocessing steps are kept as is with minimal optimizations performed.
+Torchvision and PIL dependency for demo has been eliminated and code can run without it. Some postprocessing steps are kept as is with minimal optimizations performed.
 
 ## Steps to reproduce
 
@@ -35,7 +35,7 @@ mo --use_new_frontend --mean_values="[123.675, 116.28, 103.53]" --scale_values="
 This will generate FaceParsing.xml and *.bin files that represent model in OV IR.
 Mean values are integrated in model graph, no need for additional preprocessing.
 
-### Run demo (requries camera)
+### Run demo (requires camera)
 ```Shell
 python openvino_webcam_demo.py
 ```
