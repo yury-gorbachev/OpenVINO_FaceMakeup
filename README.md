@@ -2,7 +2,7 @@
 
 This is OpenVINO based demo for face makeup. Forked from original repository here: [https://github.com/zllrunning/face-makeup.PyTorch](https://github.com/zllrunning/face-makeup.PyTorch)
 
-Torchvision and PILdependency for demo has been eliminated and code can run without it. Some postprocessing steps are kept as is with minimal optimizations performed.
+Torchvision and PIL dependency for demo has been eliminated and code can run without it. Some postprocessing steps are kept as is with minimal optimizations performed.
 
 ## Steps to reproduce
 
