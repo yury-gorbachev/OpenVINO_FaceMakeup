@@ -35,7 +35,7 @@ mo --use_new_frontend --mean_values="[123.675, 116.28, 103.53]" --scale_values="
 This will generate FaceParsing.xml and *.bin files that represent model in OV IR.
 Mean values are integrated in model graph, no need for additional preprocessing.
 
-### Run demo (requries camera)
+### Run demo (requires camera)
 ```Shell
 python openvino_webcam_demo.py
 ```
